@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function validBook(bookId) {
+      let data = request.resource.data;
+      return data.keys().hasOnly([
+          'id',
+          'userId',
+          'title',
+          'author',
+          'genre',
+          'status',
+          'rating',
+          'favorite',
+          'notes',
+          'createdAt'
+        ])
+        && data.keys().hasAll([
+          'id',
+          'userId',
+          'title',
+          'author',
+          'genre',
+          'status',
+          'favorite',
+          'createdAt'
+        ])
+        && data.id == bookId
+        && data.userId == request.auth.uid
+        && data.title is string
+        && data.title.matches('.*\\S.*')
+        && data.title.size() <= 100
+        && data.author is string
+        && data.author.matches('.*\\S.*')
+        && data.author.size() <= 60
+        && data.genre in ['Fiction', 'Non-Fiction', 'Academic', 'Other']
+        && data.status in ['To Read', 'Reading', 'Finished']
+        && (!('rating' in data)
+          || (data.rating is int && data.rating >= 0 && data.rating <= 5))
+        && data.favorite is bool
+        && (!('notes' in data)
+          || (data.notes is string && data.notes.size() <= 300))
+        && data.createdAt is timestamp;
+    }
+
+    match /books/{bookId} {
+      allow read: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && validBook(bookId);
+      allow update: if signedIn()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.createdAt == resource.data.createdAt
+        && validBook(bookId);
+      allow delete: if signedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}

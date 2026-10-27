@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "12869773255",
+    "firebase_url": "https://iot-group-2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "iot-group-2",
+    "storage_bucket": "iot-group-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12869773255:android:9447cd716c9fa567c15be2",
+        "android_client_info": {
+          "package_name": "com.example.bookshelf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByzIPgr8TDrEalZaQuE3yS8Mq8drY47is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12869773255:android:1fae15c0f62eaa2cc15be2",
+        "android_client_info": {
+          "package_name": "com.mycompany.iot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByzIPgr8TDrEalZaQuE3yS8Mq8drY47is"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
