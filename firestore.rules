@@ -48,7 +48,9 @@ service cloud.firestore {
     }
 
     match /books/{bookId} {
-      allow read: if signedIn() && resource.data.userId == request.auth.uid;
+      allow get: if signedIn()
+        && (resource == null || resource.data.userId == request.auth.uid);
+      allow list: if signedIn() && resource.data.userId == request.auth.uid;
       allow create: if signedIn() && validBook(bookId);
       allow update: if signedIn()
         && resource.data.userId == request.auth.uid
